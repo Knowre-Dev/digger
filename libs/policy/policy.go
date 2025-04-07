@@ -140,6 +140,9 @@ func getAccessPolicyForNamespace(p *DiggerHttpPolicyProvider, namespace string, 
 		slog.Error("Failed to parse digger cloud URL", "url", p.DiggerHost, "error", err)
 		return "", nil, fmt.Errorf("not able to parse digger cloud url: %v", err)
 	}
+	if u.Scheme == "" {
+		u.Scheme = "https"
+	}
 	u.Path = "/repos/" + namespace + "/projects/" + projectName + "/access-policy"
 
 	slog.Debug("Fetching namespace access policy",
