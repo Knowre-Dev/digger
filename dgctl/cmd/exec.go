@@ -212,6 +212,9 @@ var execCmd = &cobra.Command{
 		}
 
 		diggerHostname := os.Getenv("DIGGER_BACKEND_URL")
+		if !strings.HasPrefix(diggerHostname, "http://") && !strings.HasPrefix(diggerHostname, "https://") {
+			diggerHostname = "https://" + diggerHostname
+		}
 		actor, err := getRepoUsername()
 		if err != nil {
 			log.Printf("could not get repo actor: %v", err)

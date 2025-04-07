@@ -4,17 +4,18 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"time"
+
 	"github.com/diggerhq/digger/libs/scheduler"
 	"github.com/diggerhq/digger/next/ci_backends"
 	"github.com/diggerhq/digger/next/dbmodels"
 	"github.com/diggerhq/digger/next/services"
 	"github.com/diggerhq/digger/next/utils"
 	"github.com/gin-gonic/gin"
-	"log"
-	"net/http"
-	"net/url"
-	"os"
-	"time"
 )
 
 type TriggerDriftRequest struct {
@@ -101,6 +102,10 @@ func (d DiggerController) TriggerDriftDetectionForProject(c *gin.Context) {
 func (d DiggerController) TriggerCronForMatchingProjects(c *gin.Context) {
 	webhookSecret := os.Getenv("DIGGER_WEBHOOK_SECRET")
 	diggerHostName := os.Getenv("DIGGER_HOSTNAME")
+
+	if diggerHostName == "" {
+		diggerHostName = "https://digger.knowre-mgt.com"
+	}
 
 	driftUrl, err := url.JoinPath(diggerHostName, "_internal/trigger_drift")
 	if err != nil {

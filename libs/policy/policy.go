@@ -50,6 +50,14 @@ func getAccessPolicyForOrganisation(p *DiggerHttpPolicyProvider) (string, *http.
 		slog.Error("Failed to parse digger cloud URL", "url", p.DiggerHost, "error", err)
 		return "", nil, fmt.Errorf("not able to parse digger cloud url: %v", err)
 	}
+
+	if u.Scheme == "" {
+		u.Scheme = "https"
+	}
+	if u.Host == "" {
+		u.Host = "digger.knowre-mgt.com"
+	}
+
 	u.Path = "/orgs/" + organisation + "/access-policy"
 
 	slog.Debug("Fetching org access policy", "organisation", organisation, "url", u.String())
@@ -80,6 +88,12 @@ func getPlanPolicyForOrganisation(p *DiggerHttpPolicyProvider) (string, *http.Re
 		slog.Error("Failed to parse digger cloud URL", "url", p.DiggerHost, "error", err)
 		return "", nil, fmt.Errorf("not able to parse digger cloud url: %v", err)
 	}
+	if u.Scheme == "" {
+		u.Scheme = "https"
+	}
+	if u.Host == "" {
+		u.Host = "digger.knowre-mgt.com"
+	}
 	u.Path = "/orgs/" + organisation + "/plan-policy"
 
 	slog.Debug("Fetching org plan policy", "organisation", organisation, "url", u.String())
@@ -109,6 +123,12 @@ func getDriftPolicyForOrganisation(p *DiggerHttpPolicyProvider) (string, *http.R
 	if err != nil {
 		slog.Error("Failed to parse digger cloud URL", "url", p.DiggerHost, "error", err)
 		return "", nil, fmt.Errorf("not able to parse digger cloud url: %v", err)
+	}
+	if u.Scheme == "" {
+		u.Scheme = "https"
+	}
+	if u.Host == "" {
+		u.Host = "digger.knowre-mgt.com"
 	}
 	u.Path = "/orgs/" + organisation + "/drift-policy"
 
@@ -178,6 +198,12 @@ func getPlanPolicyForNamespace(p *DiggerHttpPolicyProvider, namespace string, pr
 	if err != nil {
 		slog.Error("Failed to parse digger cloud URL", "url", p.DiggerHost, "error", err)
 		return "", nil, fmt.Errorf("not able to parse digger cloud url: %v", err)
+	}
+	if u.Scheme == "" {
+		u.Scheme = "https"
+	}
+	if u.Host == "" {
+		u.Host = "digger.knowre-mgt.com"
 	}
 	u.Path = "/repos/" + namespace + "/projects/" + projectName + "/plan-policy"
 
