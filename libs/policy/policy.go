@@ -143,6 +143,9 @@ func getAccessPolicyForNamespace(p *DiggerHttpPolicyProvider, namespace string, 
 	if u.Scheme == "" {
 		u.Scheme = "https"
 	}
+	if u.Host == "" {
+		u.Host = "digger.knowre-mgt.com"
+	}
 	u.Path = "/repos/" + namespace + "/projects/" + projectName + "/access-policy"
 
 	slog.Debug("Fetching namespace access policy",
