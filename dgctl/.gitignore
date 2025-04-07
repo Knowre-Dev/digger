@@ -1,0 +1,5 @@
+.archive
+generated/
+dgctl.generated.json
+.dgctl
+dgctl
